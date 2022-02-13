@@ -1,24 +1,31 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [userText, setUserText] = useState<string>("")
+  function handleChange(event: { target: { value: String; }; }) {
+    const textAreaText = event.target.value
+    const result = textAreaText
+      .split(" ")
+      .filter(word => word.trim()!=="")
+      .map(word => {
+        if (word.length === 1){
+          return word+"ay"
+        }
+        else { 
+          return word.slice(1) + "-" + word[0] + "ay"
+        }
+      }).join(" ")
+    setUserText(result);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <textarea onChange={handleChange} />
+      <h2>our-yay esults-ray</h2>
+      <p>{userText}</p>
     </div>
   );
 }
